@@ -1,34 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# tailwindPlayground
 
-## Getting Started
+取り敢えず tailwind をして...
 
-First, run the development server:
+後の`next.js`などはハッキリ他のレポでします
 
-```bash
-npm run dev
-# or
-yarn dev
+## install
+
+```shell
+npm install -D tailwindcss postcss autoprefixer
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## tailwind initialize with postcss
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```shell
+npx tailwindcss init -p
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+`postcss.config.js`, `tailwind.config.js` 가 생성됨
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+전자는 기본적으로 간단한 설정이 되어있음
 
-## Learn More
+## Set `tailwind.config.js`
 
-To learn more about Next.js, take a look at the following resources:
+`content` field 에서는, 어느 경로에서의 어느 파일에 `tailwind` 를 적용할 것인지 설정
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```js
+// tailwind.config.js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./pages/**/*.{js,jsx,ts,tsx}",
+    "./components/**/*.{js,jsx,tx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+이후, `tailwind`를 사용할 것이므로 `next.js` 에서 기본적으로 설치되는 _global.css_ 파일의 내용은 삭제해주고, 아래의 내용으로 대체한다
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
